@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoDB Monitoring Tutorial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    
+<header class="header">
+  <div>
+    <div class="badges">
+      <span class="badge primary">SPA Tutorial</span>
+      <span class="badge">MongoDB Monitoring</span>
+    </div>
+    <h1 class="hero-title">Интерактивный туториал по средствам мониторинга и отладки MongoDB</h1>
+    <p class="hero-subtitle">От мониторинга операционной системы до внутренней телеметрии WiredTiger и FTDC.</p>
+  </div>
+  <div class="progress-card">
+    <div class="progress-row"><span>Прогресс прохождения</span><span data-progress-count>0/5</span></div>
+    <div class="progress-track"><div class="progress-fill" data-progress-fill></div></div>
+    <div class="actions">
+      <a class="btn secondary" href="index.html">На главную</a>
+      <button class="btn outline" type="button" onclick="history.back()">Назад</button>
+      <button class="btn outline" type="button" data-reset>Сбросить прогресс</button>
+    </div>
+  </div>
+</header>
+
+    <section class="grid-hero">
+      <article class="card">
+        <h2>Введение</h2>
+        <p>Этот сайт построен по принципу «матрёшки»: от внешних средств наблюдения к внутренним механизмам MongoDB.</p>
+        <p>Цель туториала — показать, что диагностика проблем в MongoDB начинается не с одной команды, а с последовательного перехода между уровнями наблюдаемости: ОС → внешние системы → встроенные средства MongoDB → интеграции → внутренняя телеметрия.</p>
+        <p>Каждый уровень содержит теорию, список инструментов, ключевые метрики, практические команды, интерпретацию результатов и мини-тест.</p>
+      </article>
+      <aside class="card steps">
+        <h2>Как проходить туториал</h2>
+        <div class="step">1. Прочитайте введение и выберите уровень.</div>
+        <div class="step" style="margin-top:12px">2. Изучите теорию, метрики и команды.</div>
+        <div class="step" style="margin-top:12px">3. Ответьте на вопросы самопроверки.</div>
+        <div class="step" style="margin-top:12px">4. После успешного прохождения уровень отмечается в прогрессе.</div>
+      </aside>
+    </section>
+
+    <div class="section-head">
+      <h2>Уровни мониторинга</h2>
+      <span class="badge">От внешнего к внутреннему</span>
+    </div>
+    <section class="level-grid">
+      
+<article class="card level-card">
+  <div class="level-top">
+    <div class="icon-wrap">🖥️</div>
+    <span class="status" data-level-status="1">Не пройден</span>
+  </div>
+  <h3>Уровень 1 — Мониторинг операционной системы</h3>
+  <p class="muted">Внешний слой: CPU, память, диск и сеть хоста, где запущен MongoDB</p>
+  <p>Понять, не упирается ли MongoDB в ресурсы сервера раньше, чем проблема проявится в самой базе.</p>
+  <a class="btn primary" href="levels/level1.html">Открыть уровень →</a>
+</article>
+
+<article class="card level-card">
+  <div class="level-top">
+    <div class="icon-wrap">📊</div>
+    <span class="status" data-level-status="2">Не пройден</span>
+  </div>
+  <h3>Уровень 2 — Внешние системы мониторинга</h3>
+  <p class="muted">Централизованный сбор, хранение и визуализация метрик MongoDB и инфраструктуры</p>
+  <p>Увидеть общую картину, построить графики и настроить алерты.</p>
+  <a class="btn primary" href="levels/level2.html">Открыть уровень →</a>
+</article>
+
+<article class="card level-card">
+  <div class="level-top">
+    <div class="icon-wrap">🗄️</div>
+    <span class="status" data-level-status="3">Не пройден</span>
+  </div>
+  <h3>Уровень 3 — Встроенные средства MongoDB</h3>
+  <p class="muted">Команды, системные представления и журналы внутри самой СУБД</p>
+  <p>Найти причину проблемы уже на уровне экземпляра MongoDB.</p>
+  <a class="btn primary" href="levels/level3.html">Открыть уровень →</a>
+</article>
+
+<article class="card level-card">
+  <div class="level-top">
+    <div class="icon-wrap">🔌</div>
+    <span class="status" data-level-status="4">Не пройден</span>
+  </div>
+  <h3>Уровень 4 — Агенты, интеграции и расширяемые компоненты</h3>
+  <p class="muted">Экосистема вокруг MongoDB: exporters, менеджеры, лог-агенты и инструменты анализа</p>
+  <p>Расширить базовые возможности мониторинга и встроить MongoDB в корпоративный observability-стек.</p>
+  <a class="btn primary" href="levels/level4.html">Открыть уровень →</a>
+</article>
+
+<article class="card level-card">
+  <div class="level-top">
+    <div class="icon-wrap">⚙️</div>
+    <span class="status" data-level-status="5">Не пройден</span>
+  </div>
+  <h3>Уровень 5 — Внутренняя телеметрия и низкоуровневые механизмы</h3>
+  <p class="muted">Самый глубокий слой: WiredTiger, FTDC, checkpoints, cache eviction, блокировки</p>
+  <p>Понять внутренние причины деградации производительности и нестабильности MongoDB.</p>
+  <a class="btn primary" href="levels/level5.html">Открыть уровень →</a>
+</article>
+
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
