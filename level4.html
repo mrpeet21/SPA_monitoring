@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Уровень 4 — Агенты, интеграции и расширяемые компоненты</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    
+<header class="header">
+  <div>
+    <div class="badges">
+      <span class="badge primary">SPA Tutorial</span>
+      <span class="badge">MongoDB Monitoring</span>
+    </div>
+    <h1 class="hero-title">Интерактивный туториал по средствам мониторинга и отладки MongoDB</h1>
+    <p class="hero-subtitle">От мониторинга операционной системы до внутренней телеметрии WiredTiger и FTDC.</p>
+  </div>
+  <div class="progress-card">
+    <div class="progress-row"><span>Прогресс прохождения</span><span data-progress-count>0/5</span></div>
+    <div class="progress-track"><div class="progress-fill" data-progress-fill></div></div>
+    <div class="actions">
+      <a class="btn secondary" href="../index.html">На главную</a>
+      <button class="btn outline" type="button" onclick="history.back()">Назад</button>
+      <button class="btn outline" type="button" data-reset>Сбросить прогресс</button>
+    </div>
+  </div>
+</header>
+
+    <section class="card">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+        <div class="icon-wrap">🔌</div>
+        <span class="status" data-level-complete="4">Уровень не завершён</span>
+      </div>
+      <h2 class="level-page-title">Уровень 4 — Агенты, интеграции и расширяемые компоненты</h2>
+      <p class="muted">Экосистема вокруг MongoDB: exporters, менеджеры, лог-агенты и инструменты анализа</p>
+      <div class="level-summary"><strong>Цель уровня:</strong> Расширить базовые возможности мониторинга и встроить MongoDB в корпоративный observability-стек.</div>
+    </section>
+
+    <section class="level-layout">
+      <article class="card">
+        <h2>Теория</h2>
+        <p>У MongoDB не так много классических серверных плагинов, как у некоторых других СУБД, поэтому для уровня 4 логично выделить экосистему интеграций и агентов.</p><p>Сюда входят exporters, Ops Manager / Atlas agents, системы анализа логов, PMM и другие инструменты, которые дополняют встроенную диагностику.</p>
+      </article>
+      <article class="card">
+        <h2>Инструменты</h2>
+        <div class="tool"><strong>Percona mongodb_exporter</strong><p>Экспортирует диагностические показатели MongoDB для Prometheus.</p></div><div class="tool"><strong>Percona Monitoring and Management (PMM)</strong><p>Готовые дашборды и аналитика для MongoDB.</p></div><div class="tool"><strong>MongoDB Ops Manager / Atlas agents</strong><p>Агенты для сбора состояния, автоматизации и управляемого мониторинга.</p></div><div class="tool"><strong>Fluent Bit / Vector / Filebeat</strong><p>Отправка MongoDB логов в централизованное хранилище.</p></div><div class="tool"><strong>MongoDB Compass</strong><p>GUI-клиент, который помогает смотреть explain plan, индексы и коллекции.</p></div>
+      </article>
+    </section>
+
+    <section class="level-layout-2">
+      <article class="card">
+        <h2>Ключевые метрики</h2>
+        <div class="metric-wrap"><span class="metric">Custom dashboards</span><span class="metric">Exported replica metrics</span><span class="metric">Centralized logs</span><span class="metric">Query patterns</span><span class="metric">Operational alerts</span></div>
+      </article>
+      <article class="card">
+        <h2>Интерпретация результатов</h2>
+        <div class="interp">Если метрики нормальные, но в логах часто встречаются slow query и connection storms, причиной может быть не база, а поведение приложения.</div><div class="interp">Централизация логов помогает связывать события MongoDB с инцидентами на уровне Kubernetes, VM или API.</div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Практический блок</h2>
+      <p>Команды и примеры, которые можно показать в проекте как кодовые блоки или иллюстрации.</p>
+      <div class="command"><strong>Пример запуска exporter в Docker</strong><pre><code>docker run -d --name mongodb-exporter -p 9216:9216 percona/mongodb_exporter --mongodb.uri='mongodb://host.docker.internal:27017'</code></pre></div><div class="command"><strong>Пример Fluent Bit input</strong><pre><code>[INPUT]
+    Name tail
+    Path /var/log/mongodb/mongod.log
+    Tag mongodb.logs</code></pre></div><div class="command"><strong>Идея для log search</strong><pre><code>Искать в логах фразы: slow query, connection accepted, checkpoint, eviction, repl lag</code></pre></div>
+    </section>
+
+    <section class="card" data-quiz="4" data-answers='[1, 0]'>
+      <h2>Самопроверка</h2>
+      <p>Ответьте на вопросы. Для прохождения уровня нужно правильно ответить на все.</p>
+      <div style="display:grid;gap:16px">
+        
+<div class="quiz-item" data-q="0">
+  <h3 style="margin:0 0 14px">1. Почему exporter важен в observability-цепочке?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q4_0" value="0">
+  <span class="quiz-option-inner">Он заменяет MongoDB</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q4_0" value="1">
+  <span class="quiz-option-inner">Он публикует метрики для внешних систем</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q4_0" value="2">
+  <span class="quiz-option-inner">Он шифрует трафик клиента</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q4_0" value="3">
+  <span class="quiz-option-inner">Он создаёт индексы автоматически</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="0"><strong>Пояснение:</strong> Exporter делает диагностические данные доступными для Prometheus и других систем наблюдаемости.</p>
+</div>
+
+<div class="quiz-item" data-q="1">
+  <h3 style="margin:0 0 14px">2. Зачем собирать логи MongoDB отдельно от метрик?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q4_1" value="0">
+  <span class="quiz-option-inner">Логи показывают текстовые события и контекст ошибок</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q4_1" value="1">
+  <span class="quiz-option-inner">Чтобы уменьшить RAM</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q4_1" value="2">
+  <span class="quiz-option-inner">Чтобы отключить profiler</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q4_1" value="3">
+  <span class="quiz-option-inner">Чтобы ускорить backup</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="1"><strong>Пояснение:</strong> Метрики показывают тренды, а логи — конкретные события, ошибки и детали выполнения операций.</p>
+</div>
+
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" data-check>Проверить ответы</button>
+      </div>
+      <div class="result fail" data-result>После проверки здесь появится результат.</div>
+    </section>
+
+    <div class="footer-nav">
+      <a class="btn outline" href="level3.html">Предыдущий</a>
+      <a class="btn primary" href="level5.html">Следующий</a>
+    </div>
+  </div>
+  <script src="../script.js"></script>
+</body>
+</html>

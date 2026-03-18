@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Уровень 1 — Мониторинг операционной системы</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    
+<header class="header">
+  <div>
+    <div class="badges">
+      <span class="badge primary">SPA Tutorial</span>
+      <span class="badge">MongoDB Monitoring</span>
+    </div>
+    <h1 class="hero-title">Интерактивный туториал по средствам мониторинга и отладки MongoDB</h1>
+    <p class="hero-subtitle">От мониторинга операционной системы до внутренней телеметрии WiredTiger и FTDC.</p>
+  </div>
+  <div class="progress-card">
+    <div class="progress-row"><span>Прогресс прохождения</span><span data-progress-count>0/5</span></div>
+    <div class="progress-track"><div class="progress-fill" data-progress-fill></div></div>
+    <div class="actions">
+      <a class="btn secondary" href="../index.html">На главную</a>
+      <button class="btn outline" type="button" onclick="history.back()">Назад</button>
+      <button class="btn outline" type="button" data-reset>Сбросить прогресс</button>
+    </div>
+  </div>
+</header>
+
+    <section class="card">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+        <div class="icon-wrap">🖥️</div>
+        <span class="status" data-level-complete="1">Уровень не завершён</span>
+      </div>
+      <h2 class="level-page-title">Уровень 1 — Мониторинг операционной системы</h2>
+      <p class="muted">Внешний слой: CPU, память, диск и сеть хоста, где запущен MongoDB</p>
+      <div class="level-summary"><strong>Цель уровня:</strong> Понять, не упирается ли MongoDB в ресурсы сервера раньше, чем проблема проявится в самой базе.</div>
+    </section>
+
+    <section class="level-layout">
+      <article class="card">
+        <h2>Теория</h2>
+        <p>На этом уровне мы смотрим не на MongoDB напрямую, а на состояние Linux/Windows-хоста. Даже идеально настроенная база будет тормозить, если на сервере высокий iowait, не хватает памяти или сеть работает нестабильно.</p><p>Для MongoDB особенно важны задержки диска, свободная память, активность swap, загрузка CPU и сетевой трафик между клиентами, репликами и shard-компонентами.</p>
+      </article>
+      <article class="card">
+        <h2>Инструменты</h2>
+        <div class="tool"><strong>top / htop</strong><p>Показывают загрузку CPU, память, процессы mongod и фоновые пики нагрузки.</p></div><div class="tool"><strong>vmstat</strong><p>Помогает увидеть переключения контекста, очередь процессов, swap и iowait.</p></div><div class="tool"><strong>iostat</strong><p>Ключевой инструмент для оценки дисковой подсистемы: util, await, svctm, throughput.</p></div><div class="tool"><strong>sar</strong><p>Исторические метрики CPU, памяти, сети и диска — полезны для ретроспективы.</p></div><div class="tool"><strong>ss / netstat</strong><p>Проверка количества соединений, состояний TCP и сетевых очередей.</p></div>
+      </article>
+    </section>
+
+    <section class="level-layout-2">
+      <article class="card">
+        <h2>Ключевые метрики</h2>
+        <div class="metric-wrap"><span class="metric">CPU user/system/iowait</span><span class="metric">RAM и swap</span><span class="metric">Disk await/util/read-write throughput</span><span class="metric">Network bytes/s, retransmits</span><span class="metric">Количество процессов и load average</span></div>
+      </article>
+      <article class="card">
+        <h2>Интерпретация результатов</h2>
+        <div class="interp">Если iowait стабильно высокий, а util диска близок к 100%, база ограничена дисковой подсистемой.</div><div class="interp">Если система активно использует swap, MongoDB может резко деградировать по задержкам.</div><div class="interp">Если load average растёт вместе с CPU system и большим числом контекстных переключений, стоит искать конкуренцию за CPU или слишком много параллельных операций.</div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Практический блок</h2>
+      <p>Команды и примеры, которые можно показать в проекте как кодовые блоки или иллюстрации.</p>
+      <div class="command"><strong>Найти процесс MongoDB</strong><pre><code>ps aux | grep mongod</code></pre></div><div class="command"><strong>Проверить нагрузку CPU и память</strong><pre><code>top -p $(pgrep -d',' mongod)</code></pre></div><div class="command"><strong>Оценить диск</strong><pre><code>iostat -xz 1</code></pre></div><div class="command"><strong>Проверить память и iowait</strong><pre><code>vmstat 1</code></pre></div><div class="command"><strong>Посмотреть сетевые соединения MongoDB</strong><pre><code>ss -tnp | grep 27017</code></pre></div>
+    </section>
+
+    <section class="card" data-quiz="1" data-answers='[0, 2]'>
+      <h2>Самопроверка</h2>
+      <p>Ответьте на вопросы. Для прохождения уровня нужно правильно ответить на все.</p>
+      <div style="display:grid;gap:16px">
+        
+<div class="quiz-item" data-q="0">
+  <h3 style="margin:0 0 14px">1. Что обычно указывает на дисковое узкое место для MongoDB?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q1_0" value="0">
+  <span class="quiz-option-inner">Высокий await и util в iostat</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q1_0" value="1">
+  <span class="quiz-option-inner">Низкий uptime процесса</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q1_0" value="2">
+  <span class="quiz-option-inner">Большой размер коллекции</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q1_0" value="3">
+  <span class="quiz-option-inner">Наличие replica set</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="0"><strong>Пояснение:</strong> await показывает задержку I/O, а util — занятость устройства. Вместе они хорошо сигнализируют о проблемах диска.</p>
+</div>
+
+<div class="quiz-item" data-q="1">
+  <h3 style="margin:0 0 14px">2. Почему swap опасен для MongoDB?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q1_1" value="0">
+  <span class="quiz-option-inner">Он ускоряет индексацию</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q1_1" value="1">
+  <span class="quiz-option-inner">Он уменьшает размер oplog</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q1_1" value="2">
+  <span class="quiz-option-inner">Он увеличивает задержки доступа к памяти</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q1_1" value="3">
+  <span class="quiz-option-inner">Он отключает WiredTiger</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="1"><strong>Пояснение:</strong> Когда рабочий набор уходит в swap, доступ к данным становится значительно медленнее, и время ответа запросов растёт.</p>
+</div>
+
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" data-check>Проверить ответы</button>
+      </div>
+      <div class="result fail" data-result>После проверки здесь появится результат.</div>
+    </section>
+
+    <div class="footer-nav">
+      <a class="btn outline" href="../index.html">Главная</a>
+      <a class="btn primary" href="level2.html">Следующий</a>
+    </div>
+  </div>
+  <script src="../script.js"></script>
+</body>
+</html>

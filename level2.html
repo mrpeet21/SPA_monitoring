@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Уровень 2 — Внешние системы мониторинга</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    
+<header class="header">
+  <div>
+    <div class="badges">
+      <span class="badge primary">SPA Tutorial</span>
+      <span class="badge">MongoDB Monitoring</span>
+    </div>
+    <h1 class="hero-title">Интерактивный туториал по средствам мониторинга и отладки MongoDB</h1>
+    <p class="hero-subtitle">От мониторинга операционной системы до внутренней телеметрии WiredTiger и FTDC.</p>
+  </div>
+  <div class="progress-card">
+    <div class="progress-row"><span>Прогресс прохождения</span><span data-progress-count>0/5</span></div>
+    <div class="progress-track"><div class="progress-fill" data-progress-fill></div></div>
+    <div class="actions">
+      <a class="btn secondary" href="../index.html">На главную</a>
+      <button class="btn outline" type="button" onclick="history.back()">Назад</button>
+      <button class="btn outline" type="button" data-reset>Сбросить прогресс</button>
+    </div>
+  </div>
+</header>
+
+    <section class="card">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+        <div class="icon-wrap">📊</div>
+        <span class="status" data-level-complete="2">Уровень не завершён</span>
+      </div>
+      <h2 class="level-page-title">Уровень 2 — Внешние системы мониторинга</h2>
+      <p class="muted">Централизованный сбор, хранение и визуализация метрик MongoDB и инфраструктуры</p>
+      <div class="level-summary"><strong>Цель уровня:</strong> Увидеть общую картину, построить графики и настроить алерты.</div>
+    </section>
+
+    <section class="level-layout">
+      <article class="card">
+        <h2>Теория</h2>
+        <p>Внешние системы мониторинга объединяют метрики ОС, MongoDB и приложения в одной панели. Это удобно для долгосрочного анализа и поиска корреляций.</p><p>Чаще всего для MongoDB используют Prometheus + exporter + Grafana, Zabbix, Datadog, а также встроенные панели MongoDB Atlas.</p>
+      </article>
+      <article class="card">
+        <h2>Инструменты</h2>
+        <div class="tool"><strong>Prometheus</strong><p>Собирает временные ряды метрик через exporters.</p></div><div class="tool"><strong>Grafana</strong><p>Строит дашборды и алерты по latency, connections, opcounters, replication lag.</p></div><div class="tool"><strong>Zabbix</strong><p>Подходит для мониторинга инфраструктуры и БД в едином контуре.</p></div><div class="tool"><strong>MongoDB Atlas Metrics</strong><p>Готовые графики для managed-кластеров: CPU, memory, network, opcounters, replication lag.</p></div><div class="tool"><strong>Alertmanager</strong><p>Маршрутизация оповещений по правилам.</p></div>
+      </article>
+    </section>
+
+    <section class="level-layout-2">
+      <article class="card">
+        <h2>Ключевые метрики</h2>
+        <div class="metric-wrap"><span class="metric">Connections current/available</span><span class="metric">Opcounters insert/query/update/delete</span><span class="metric">Replication lag</span><span class="metric">Cache usage</span><span class="metric">CPU, network, disk, memory</span></div>
+      </article>
+      <article class="card">
+        <h2>Интерпретация результатов</h2>
+        <div class="interp">Если connections растут скачком, а operations/sec остаются на месте, возможна проблема на уровне пулов соединений или зависаний клиентов.</div><div class="interp">Replication lag важен для репликации и чтений со secondary: рост лага = риск устаревших данных.</div><div class="interp">График cache usage помогает понять, насколько рабочий набор помещается в память.</div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Практический блок</h2>
+      <p>Команды и примеры, которые можно показать в проекте как кодовые блоки или иллюстрации.</p>
+      <div class="command"><strong>Пример docker-compose для exporter</strong><pre><code>services:
+  mongodb-exporter:
+    image: percona/mongodb_exporter:0.43
+    command: --mongodb.uri=mongodb://mongo:27017
+    ports:
+      - '9216:9216'</code></pre></div><div class="command"><strong>Пример target для Prometheus</strong><pre><code>scrape_configs:
+  - job_name: 'mongodb'
+    static_configs:
+      - targets: ['mongodb-exporter:9216']</code></pre></div><div class="command"><strong>Пример alert-идеи</strong><pre><code>HighReplicationLag if mongodb_mongod_replset_member_replication_lag > 10 for 5m</code></pre></div>
+    </section>
+
+    <section class="card" data-quiz="2" data-answers='[1, 1]'>
+      <h2>Самопроверка</h2>
+      <p>Ответьте на вопросы. Для прохождения уровня нужно правильно ответить на все.</p>
+      <div style="display:grid;gap:16px">
+        
+<div class="quiz-item" data-q="0">
+  <h3 style="margin:0 0 14px">1. Зачем нужен exporter в связке Prometheus + MongoDB?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q2_0" value="0">
+  <span class="quiz-option-inner">Для резервного копирования</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q2_0" value="1">
+  <span class="quiz-option-inner">Для преобразования данных MongoDB в метрики, которые понимает Prometheus</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q2_0" value="2">
+  <span class="quiz-option-inner">Для шардирования</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q2_0" value="3">
+  <span class="quiz-option-inner">Для сжатия oplog</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="0"><strong>Пояснение:</strong> Prometheus опрашивает HTTP endpoint. Exporter получает данные из MongoDB и публикует их в формате метрик.</p>
+</div>
+
+<div class="quiz-item" data-q="1">
+  <h3 style="margin:0 0 14px">2. Какой показатель наиболее важен для контроля актуальности secondary-узла?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q2_1" value="0">
+  <span class="quiz-option-inner">Disk size</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q2_1" value="1">
+  <span class="quiz-option-inner">Replication lag</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q2_1" value="2">
+  <span class="quiz-option-inner">Version</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q2_1" value="3">
+  <span class="quiz-option-inner">Uptime</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="1"><strong>Пояснение:</strong> Replication lag показывает отставание secondary от primary и помогает вовремя заметить проблемы репликации.</p>
+</div>
+
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" data-check>Проверить ответы</button>
+      </div>
+      <div class="result fail" data-result>После проверки здесь появится результат.</div>
+    </section>
+
+    <div class="footer-nav">
+      <a class="btn outline" href="level1.html">Предыдущий</a>
+      <a class="btn primary" href="level3.html">Следующий</a>
+    </div>
+  </div>
+  <script src="../script.js"></script>
+</body>
+</html>

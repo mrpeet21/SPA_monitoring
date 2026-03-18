@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Уровень 5 — Внутренняя телеметрия и низкоуровневые механизмы</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    
+<header class="header">
+  <div>
+    <div class="badges">
+      <span class="badge primary">SPA Tutorial</span>
+      <span class="badge">MongoDB Monitoring</span>
+    </div>
+    <h1 class="hero-title">Интерактивный туториал по средствам мониторинга и отладки MongoDB</h1>
+    <p class="hero-subtitle">От мониторинга операционной системы до внутренней телеметрии WiredTiger и FTDC.</p>
+  </div>
+  <div class="progress-card">
+    <div class="progress-row"><span>Прогресс прохождения</span><span data-progress-count>0/5</span></div>
+    <div class="progress-track"><div class="progress-fill" data-progress-fill></div></div>
+    <div class="actions">
+      <a class="btn secondary" href="../index.html">На главную</a>
+      <button class="btn outline" type="button" onclick="history.back()">Назад</button>
+      <button class="btn outline" type="button" data-reset>Сбросить прогресс</button>
+    </div>
+  </div>
+</header>
+
+    <section class="card">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+        <div class="icon-wrap">⚙️</div>
+        <span class="status" data-level-complete="5">Уровень не завершён</span>
+      </div>
+      <h2 class="level-page-title">Уровень 5 — Внутренняя телеметрия и низкоуровневые механизмы</h2>
+      <p class="muted">Самый глубокий слой: WiredTiger, FTDC, checkpoints, cache eviction, блокировки</p>
+      <div class="level-summary"><strong>Цель уровня:</strong> Понять внутренние причины деградации производительности и нестабильности MongoDB.</div>
+    </section>
+
+    <section class="level-layout">
+      <article class="card">
+        <h2>Теория</h2>
+        <p>Здесь мы смотрим на внутренние механизмы движка хранения и диагностическую телеметрию. Для MongoDB это особенно важно в сочетании с WiredTiger и FTDC.</p><p>Такой уровень нужен, когда обычных графиков уже недостаточно: например, при периодических зависаниях, проблемах чекпоинтов, давлении на cache eviction или редких всплесках latency.</p>
+      </article>
+      <article class="card">
+        <h2>Инструменты</h2>
+        <div class="tool"><strong>FTDC (Full Time Diagnostic Data Capture)</strong><p>Постоянно собирает диагностические данные в diagnostic.data для последующего анализа.</p></div><div class="tool"><strong>wiredTiger statistics</strong><p>Метрики кеша, eviction, dirty bytes, checkpoints, tickets и поведения storage engine.</p></div><div class="tool"><strong>serverStatus.wiredTiger</strong><p>Часть serverStatus, полезная для диагностики внутреннего состояния движка.</p></div><div class="tool"><strong>Диагностические логи</strong><p>Логи чекпоинтов, замедлений, ошибок репликации и storage warnings.</p></div><div class="tool"><strong>Профилирование проблемных сценариев</strong><p>Сопоставление FTDC, логов и текущих операций.</p></div>
+      </article>
+    </section>
+
+    <section class="level-layout-2">
+      <article class="card">
+        <h2>Ключевые метрики</h2>
+        <div class="metric-wrap"><span class="metric">WiredTiger cache usage</span><span class="metric">Dirty bytes</span><span class="metric">Eviction activity</span><span class="metric">Checkpoint duration</span><span class="metric">Tickets / concurrency</span><span class="metric">Internal latency spikes</span></div>
+      </article>
+      <article class="card">
+        <h2>Интерпретация результатов</h2>
+        <div class="interp">Если cache dirty bytes растут и долго не снижаются, система может страдать от затяжных чекпоинтов или недостатка дисковой производительности.</div><div class="interp">Частые или долгие checkpoint-события иногда совпадают с пиками latency на записи.</div><div class="interp">FTDC полезен тем, что сохраняет историческую телеметрию даже тогда, когда внешняя система мониторинга была настроена недостаточно подробно.</div>
+      </article>
+    </section>
+
+    <section class="card">
+      <h2>Практический блок</h2>
+      <p>Команды и примеры, которые можно показать в проекте как кодовые блоки или иллюстрации.</p>
+      <div class="command"><strong>Посмотреть внутреннюю статистику WiredTiger</strong><pre><code>db.serverStatus().wiredTiger</code></pre></div><div class="command"><strong>Проверить каталог с FTDC</strong><pre><code>ls -lah /data/db/diagnostic.data</code></pre></div><div class="command"><strong>Найти упоминания checkpoint в логах</strong><pre><code>grep -i checkpoint /var/log/mongodb/mongod.log</code></pre></div><div class="command"><strong>Отключать FTDC обычно не рекомендуется</strong><pre><code>mongod --setParameter diagnosticDataCollectionEnabled=true</code></pre></div>
+    </section>
+
+    <section class="card" data-quiz="5" data-answers='[1, 0]'>
+      <h2>Самопроверка</h2>
+      <p>Ответьте на вопросы. Для прохождения уровня нужно правильно ответить на все.</p>
+      <div style="display:grid;gap:16px">
+        
+<div class="quiz-item" data-q="0">
+  <h3 style="margin:0 0 14px">1. Для чего нужен FTDC в MongoDB?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q5_0" value="0">
+  <span class="quiz-option-inner">Для хранения пользовательских коллекций</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q5_0" value="1">
+  <span class="quiz-option-inner">Для фонового сбора диагностической телеметрии</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q5_0" value="2">
+  <span class="quiz-option-inner">Для аутентификации</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q5_0" value="3">
+  <span class="quiz-option-inner">Для запуска aggregation pipeline</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="0"><strong>Пояснение:</strong> FTDC собирает диагностические данные в фоне и помогает анализировать сложные проблемы производительности и стабильности.</p>
+</div>
+
+<div class="quiz-item" data-q="1">
+  <h3 style="margin:0 0 14px">2. Какой внутренний компонент особенно важен для анализа памяти и записи в MongoDB?</h3>
+  <div style="display:grid;gap:10px">
+    
+<label class="quiz-option">
+  <input type="radio" name="q5_1" value="0">
+  <span class="quiz-option-inner">WiredTiger cache</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q5_1" value="1">
+  <span class="quiz-option-inner">mongo shell history</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q5_1" value="2">
+  <span class="quiz-option-inner">BSON parser</span>
+</label>
+
+<label class="quiz-option">
+  <input type="radio" name="q5_1" value="3">
+  <span class="quiz-option-inner">DNS resolver</span>
+</label>
+
+  </div>
+  <p class="quiz-expl" data-expl="1"><strong>Пояснение:</strong> WiredTiger cache напрямую влияет на работу с памятью, eviction и производительность чтения/записи.</p>
+</div>
+
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" data-check>Проверить ответы</button>
+      </div>
+      <div class="result fail" data-result>После проверки здесь появится результат.</div>
+    </section>
+
+    <div class="footer-nav">
+      <a class="btn outline" href="level4.html">Предыдущий</a>
+      <a class="btn primary" href="../index.html">К списку уровней</a>
+    </div>
+  </div>
+  <script src="../script.js"></script>
+</body>
+</html>
